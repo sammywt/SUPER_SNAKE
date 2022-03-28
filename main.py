@@ -10,6 +10,14 @@ if __name__ == "__main__":
     surface = pygame.display.set_mode((1000, 1000))
     #fill the background with an RGB color (sand)
     surface.fill((194, 178, 128))
+    # importing the image to use for the snake block with pygame image model and setting it to block variable
+    block = pygame.image.load("img/snake_head_block.png").convert()
+
+    default_head_size = (25, 25)
+
+    block = pygame.transform.scale(block, default_head_size)
+    # draw the block variable on the background(surface) in specified position
+    surface.blit(block, (500, 500))
     # update the screen with whatever properties you defined (fill screen color)
     pygame.display.flip()
 

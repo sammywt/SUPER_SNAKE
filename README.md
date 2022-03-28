@@ -93,3 +93,8 @@ Increasing difficulty- levels will be created to increase the difficulty by rais
 ## VERSION 6
 
 A functional backend with user authentication that stores a users highest level achieved, and allows a user to return to easier levels. Can also store a global "highest level achieved" value and return it to all users with a username, so the player who has achieved the highest level will be displayed on all users screen.
+
+
+https://www.geeksforgeeks.org/how-to-rotate-and-scale-images-using-pygame/
+
+https://www.youtube.com/watch?v=8dfePlONtls
