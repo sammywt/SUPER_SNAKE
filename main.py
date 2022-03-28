@@ -1,5 +1,6 @@
+from glob import escape
 import pygame
-# import all possible variables from pygame.locals (this is where keystrokes are coming from)
+# import all possible variables from pygame.locals (this is where keystrokes are coming from) SEE DETAILS @ https://www.pygame.org/docs/ref/locals.html
 from pygame.locals import *
 
 # initializes pygame module
@@ -19,3 +20,9 @@ if __name__ == "__main__":
         # event is built in to pygame- for the event in this function do something
         for event in pygame.event.get():
             if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    # if the escape key is pressed, stop running the game
+                    running = False
+            # if the user selects quit, stop running the game
+            elif event.type == QUIT:
+                running = False
