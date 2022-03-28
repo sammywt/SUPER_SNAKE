@@ -1,36 +1,50 @@
-from glob import escape
 import pygame
-# import all possible variables from pygame.locals (this is where keystrokes are coming from) SEE DETAILS @ https://www.pygame.org/docs/ref/locals.html
 from pygame.locals import *
+
+
+def draw_head():
+        surface.fill((194, 178, 128))
+        surface.blit(head, (head_x, head_y))
+        pygame.display.flip()
 
 # initializes pygame module
 if __name__ == "__main__":
     pygame.init()
-    # initializes game window (pixel dimensions)
+
+    
+
+    # initializes game window (pixel dimensions) and color (.fill)
     surface = pygame.display.set_mode((1000, 1000))
-    #fill the background with an RGB color (sand)
     surface.fill((194, 178, 128))
-    # importing the image to use for the snake block with pygame image model and setting it to block variable
-    block = pygame.image.load("img/snake_head_block.png").convert()
-
+    # importing image as snake head and resizing it
+    head = pygame.image.load("img/snake_head_block.png").convert()
     default_head_size = (25, 25)
-
-    block = pygame.transform.scale(block, default_head_size)
-    # draw the block variable on the background(surface) in specified position
-    surface.blit(block, (500, 500))
-    # update the screen with whatever properties you defined (fill screen color)
+    head = pygame.transform.scale(head, default_head_size)
+    # setting the default position for the head and rendering it on the surface
+    head_x = 500
+    head_y = 500
+    surface.blit(head, (head_x, head_y))
+    # update the screen
     pygame.display.flip()
 
-    # event loop listening for escape to close window (while loop)
+# setting game up to run and giving keystrokes functionality
     running = True
-        # infinite loop, on certain keystrokes, cancel/exit the loop
     while running: 
-        # event is built in to pygame- for the event in this function do something
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    # if the escape key is pressed, stop running the game
                     running = False
-            # if the user selects quit, stop running the game
+                if event.key == K_UP:
+                    head_y -= 20
+                    draw_head()
+                if event.key == K_DOWN:
+                    head_y += 20
+                    draw_head()
+                if event.key == K_LEFT:
+                    head_x -= 20
+                    draw_head()
+                if event.key == K_RIGHT:
+                    head_x += 20
+                    draw_head()
             elif event.type == QUIT:
                 running = False
