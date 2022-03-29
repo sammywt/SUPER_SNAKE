@@ -60,7 +60,7 @@ class Snake:
 
     def walk(self):
     # Move accumulated blocks to position of block in front of it (current block position is previous blocks position)
-        time.sleep(0.05)
+        # time.sleep(0.05)
         for i in range(self.length-1, 0, -1):
             self.head_x[i] = self.head_x[i-1]
             self.head_y[i] = self.head_y[i-1]
@@ -92,6 +92,12 @@ class Game:
         self.food = Food(self.surface)
         self.food.draw_mouse()
 
+    def play(self):
+    # rendering snake walk
+        self.snake.walk()
+    # to ensure that when screen is rendered, food isn't wiped off
+        self.food.draw_mouse()  
+
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
         running = True
@@ -119,10 +125,7 @@ class Game:
                 elif event.type == QUIT:
                     running = False
 
-            # rendering snake walk
-            self.snake.walk()
-            # to ensure that when screen is rendered, food isn't wiped off
-            self.food.draw_mouse()   
+            self.play()
         
 
 if __name__ == "__main__":
