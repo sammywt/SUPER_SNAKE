@@ -42,12 +42,18 @@ class Snake:
     # creating a direction for the snake to move continuously
         self.direction = 'down'
 
-# function to render head according to keystroke
+# method to render head responsive to movement
     def draw_head(self):
         self.main_screen.fill((194, 178, 128)) 
         for i in range(self.length):
             self.main_screen.blit(self.head, (self.head_x[i], self.head_y[i]))
         pygame.display.flip()
+
+# method to increase size of snake when a mouse is eaten (adding to end of array)
+    def grow(self):
+        self.length += 1
+        self.head_x.append(-1)
+        self.head_y.append(-1)
 
 # functions to move i a direction based on keystrokes
     def move_left(self):
@@ -114,6 +120,8 @@ class Game:
     # passing snake coordinates and mouse coordinates as x/y 1 and 2 values from collide method
         if self.collide(self.snake.head_x[0], self.snake.head_y[0], self.food.mouse_x, self.food.mouse_y):
             self.food.new_food()
+        # when snake collides, increase length and add a block to the array
+            self.snake.grow()
 
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
