@@ -2,51 +2,23 @@ import pygame
 import time
 from pygame.locals import *
 
-class Game:
-    def __init__(self):
-     # initializes pygame module
-        pygame.init()
 
-    # initializes game window (pixel dimensions) and color (.fill)
-        self.surface = pygame.display.set_mode((1000, 1000))
-        self.surface.fill((194, 178, 128))
-
-    # creating the snake inside of the game by using the snake class (expects main_screen value)
-        self.snake = Snake(self.surface, 8)
-        self.snake.draw_head()
-
-# setting game up to run and giving keystrokes functionality        
-    def run_game(self):
-        running = True
-        while running: 
-            for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        running = False
-                    if event.key == K_UP:
-                        self.snake.move_up()
-                        # head_y -= 20
-                        # draw_head()
-                    if event.key == K_DOWN:
-                        self.snake.move_down()
-                        # head_y += 20
-                        # draw_head()
-                    if event.key == K_LEFT:
-                        self.snake.move_left()
-                        # head_x -= 20
-                        # draw_head()
-                    if event.key == K_RIGHT:
-                        self.snake.move_right()
-                        # head_x += 20
-                        # draw_head()
-                elif event.type == QUIT:
-                    running = False
-
-            # method with timer to delay snake head auto move
-            self.snake.walk()
-            time.sleep(0.1)
-
+# default block size
 size = 25
+
+class Food:
+    def __init__(self, main_screen):
+        mouse = pygame.image.load("img/pixel_mouse.gif").convert()
+        default_mouse_size = (60, 80)
+        self.image = pygame.transform.scale(mouse, default_mouse_size)
+        self.main_screen = main_screen
+        self.mouse_x = size * 5
+        self.mouse_y = size * 5
+
+    def draw_mouse(self):
+        self.main_screen.blit(self.image, (self.mouse_x, self.mouse_y))
+        pygame.display.flip()
+
 
 class Snake:
     def __init__(self, main_screen, length):
@@ -88,6 +60,7 @@ class Snake:
 
     def walk(self):
     # Move accumulated blocks to position of block in front of it (current block position is previous blocks position)
+        time.sleep(0.05)
         for i in range(self.length-1, 0, -1):
             self.head_x[i] = self.head_x[i-1]
             self.head_y[i] = self.head_y[i-1]
@@ -100,10 +73,58 @@ class Snake:
             self.head_x[0] -= size
         if self.direction == 'right':
             self.head_x[0] += size
-
         self.draw_head()
+        
+class Game:
+    def __init__(self):
+     # initializes pygame module
+        pygame.init()
 
-   
+    # initializes game window (pixel dimensions) and color (.fill)
+        self.surface = pygame.display.set_mode((1000, 1000))
+        self.surface.fill((194, 178, 128))
+
+    # creating the snake inside of the game by using the snake class (expects main_screen value)
+        self.snake = Snake(self.surface, 1)
+        self.snake.draw_head()
+
+    # initializing the mouse inside of the game
+        self.food = Food(self.surface)
+        self.food.draw_mouse()
+
+# setting game up to run and giving keystrokes functionality        
+    def run_game(self):
+        running = True
+        while running: 
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        running = False
+                    if event.key == K_UP:
+                        self.snake.move_up()
+                        # head_y -= 20
+                        # draw_head()
+                    if event.key == K_DOWN:
+                        self.snake.move_down()
+                        # head_y += 20
+                        # draw_head()
+                    if event.key == K_LEFT:
+                        self.snake.move_left()
+                        # head_x -= 20
+                        # draw_head()
+                    if event.key == K_RIGHT:
+                        self.snake.move_right()
+                        # head_x += 20
+                        # draw_head()
+                elif event.type == QUIT:
+                    running = False
+
+            # rendering snake walk
+            self.snake.walk()
+            # to ensure that when screen is rendered, food isn't wiped off
+            self.food.draw_mouse()   
+        
+
 if __name__ == "__main__":
     game = Game()
     game.run_game()
