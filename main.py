@@ -25,6 +25,20 @@ class Food:
         self.cheese_x = random.randint(0, 20) * size
         self.cheese_y = random.randint(0, 20) * size
 
+class Poison:
+    def __init__(self, main_screen):
+        apple = pygame.image.load("img/poison_apple.webp").convert_alpha()
+        default_apple_size = (40, 40)
+        self.poison = pygame.transform.scale(apple, default_apple_size)
+        self.main_screen = main_screen
+        self.poison_x = size * 10
+        self.poison_y = size * 10
+
+    def draw_poison(self):
+        self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
+        pygame.display.flip()
+
+
 class Rat:
     def __init__(self, main_screen, length):
         self.main_screen = main_screen
@@ -44,7 +58,7 @@ class Rat:
 
 # method to render rat responsive to movement
     def draw_rat(self):
-        self.main_screen.fill((194, 178, 128)) 
+        self.main_screen.fill((0, 0, 205)) 
         for i in range(self.length):
             self.main_screen.blit(self.rat, (self.rat_x[i], self.rat_y[i]))
         pygame.display.flip()
@@ -93,7 +107,7 @@ class Game:
 
     # initializes game window (pixel dimensions) and color (.fill)
         self.surface = pygame.display.set_mode((1000, 1000))
-        self.surface.fill((194, 178, 128))
+        self.surface.fill((0, 0, 205))
 
     # creating the rat inside of the game by using the Rat class (expects main_screen value)
         self.rat = Rat(self.surface, 1)
@@ -103,6 +117,8 @@ class Game:
         self.food = Food(self.surface)
         self.food.draw_cheese()
 
+        self.poison = Poison(self.surface)
+        self.poison.draw_poison()
 
     def collide(self, x1, y1, x2, y2):
         # if the coordinates of rat are within the coordinates of cheese, collision is true 
@@ -117,6 +133,8 @@ class Game:
         self.rat.walk()
     # to ensure that when screen is rendered, food isn't wiped off
         self.food.draw_cheese() 
+
+        self.poison.draw_poison()
 
         self.keep_score()
         pygame.display.flip()
