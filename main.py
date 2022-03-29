@@ -1,11 +1,12 @@
 import pygame
 import time
+import random
 # importing keystrokes
 from pygame.locals import *
 
 
 # default block size
-size = 40
+size = 45
 
 class Food:
     def __init__(self, main_screen):
@@ -19,7 +20,10 @@ class Food:
     def draw_mouse(self):
         self.main_screen.blit(self.image, (self.mouse_x, self.mouse_y))
         pygame.display.flip()
-
+# method to create a new mouse in a new position when previous mouse is collided with
+    def new_food(self):
+        self.mouse_x = random.randint(0, 20) * size
+        self.mouse_y = random.randint(0, 20) * size
 
 class Snake:
     def __init__(self, main_screen, length):
@@ -28,7 +32,7 @@ class Snake:
 
     # importing image as snake head and resizing it
         face = pygame.image.load("img/snake_head_block.png").convert()
-        default_head_size = (25, 25)
+        default_head_size = (size, size)
         self.head = pygame.transform.scale(face, default_head_size)
 
     # setting the default position for the head and rendering it on the surface, using array to hold subsequent blocks accumulated
@@ -109,7 +113,7 @@ class Game:
         self.food.draw_mouse() 
     # passing snake coordinates and mouse coordinates as x/y 1 and 2 values from collide method
         if self.collide(self.snake.head_x[0], self.snake.head_y[0], self.food.mouse_x, self.food.mouse_y):
-            print("run mouse run")
+            self.food.new_food()
 
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
