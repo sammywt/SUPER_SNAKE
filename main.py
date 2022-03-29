@@ -1,10 +1,11 @@
 import pygame
 import time
+# importing keystrokes
 from pygame.locals import *
 
 
 # default block size
-size = 25
+size = 40
 
 class Food:
     def __init__(self, main_screen):
@@ -60,7 +61,7 @@ class Snake:
 
     def walk(self):
     # Move accumulated blocks to position of block in front of it (current block position is previous blocks position)
-        # time.sleep(0.05)
+        time.sleep(0.2)
         for i in range(self.length-1, 0, -1):
             self.head_x[i] = self.head_x[i-1]
             self.head_y[i] = self.head_y[i-1]
@@ -92,11 +93,23 @@ class Game:
         self.food = Food(self.surface)
         self.food.draw_mouse()
 
+
+    def collide(self, x1, y1, x2, y2):
+        # if the coordinates of snake are within the coordinates of mouse, collision is true 
+        if x1 >= x2 and x1 <= x2 + size:
+            if y1 >= y2 and y1 <= y2 + size:
+                return True
+        return False
+
+
     def play(self):
     # rendering snake walk
         self.snake.walk()
     # to ensure that when screen is rendered, food isn't wiped off
-        self.food.draw_mouse()  
+        self.food.draw_mouse() 
+    # passing snake coordinates and mouse coordinates as x/y 1 and 2 values from collide method
+        if self.collide(self.snake.head_x[0], self.snake.head_y[0], self.food.mouse_x, self.food.mouse_y):
+            print("run mouse run")
 
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
