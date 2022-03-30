@@ -65,9 +65,9 @@ class Rat:
         self.length = length
 
     # importing image and resizing it
-        image = pygame.image.load("img/pixel_mouse.gif").convert_alpha()
-        default_image_size = (size*2, size*2)
-        self.rat = pygame.transform.scale(image, default_image_size)
+        self.image = pygame.image.load("img/pixel_mouse.gif").convert_alpha()
+        self.default_image_size = (size*2, size*2)
+        
 
     # setting the default position for the rat and rendering it on the surface, using array to hold subsequent blocks accumulated
         self.rat_x = [size] * length
@@ -76,9 +76,23 @@ class Rat:
     # creating a direction for the rat to move continuously
         self.direction = 'down'
 
+        self.angle = 0
+        
 # method to render rat responsive to movement
     def draw_rat(self):
-        self.main_screen.fill((0, 0, 0)) 
+        self.rat = pygame.transform.scale(self.image, self.default_image_size)
+        self.rat = pygame.transform.rotate(self.rat, self.angle)
+        self.main_screen.fill((0, 0, 205)) 
+        
+        if self.direction == 'up':
+            self.rat = pygame.transform.flip(self.rat, False, False)
+        if self.direction == 'down':
+            self.rat = pygame.transform.flip(self.rat, False, False)
+        if self.direction == 'left':
+            self.rat = pygame.transform.flip(self.rat, True, False)
+        if self.direction == 'right':
+            self.rat = pygame.transform.flip(self.rat, False, False)
+
         for i in range(self.length):
             self.main_screen.blit(self.rat, (self.rat_x[i], self.rat_y[i]))
         pygame.display.flip()
@@ -112,7 +126,7 @@ class Rat:
 
     def walk(self):
     # Move accumulated rats to position in front of it (current blocks old position is previous blocks new position)
-        rotated_img = pygame.transform.rotate(self.rat, 90)
+        # rotated_img = pygame.transform.rotate(self.rat, 90)
         time.sleep(0.2)
         for i in range(self.length-1, 0, -1):
             self.rat_x[i] = self.rat_x[i-1]
@@ -120,15 +134,16 @@ class Rat:
     # move rat continuously based on direction one full block size on each movement
         if self.direction == 'up':
             self.rat_y[0] -= size
-            # self.rat_y[0] = rotated_img
-            # self.main_screen.blit(rotated_img, (self.rat_x[i], self.rat_y[i]))
-            # pygame.display.flip()
+            self.angle = 90
         if self.direction == 'down':
             self.rat_y[0] += size
+            self.angle = 270
         if self.direction == 'left':
             self.rat_x[0] -= size
+            self.angle = 0
         if self.direction == 'right':
             self.rat_x[0] += size
+            self.angle = 0
         self.draw_rat()
         
 class Game:
