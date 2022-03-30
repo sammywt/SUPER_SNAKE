@@ -38,6 +38,26 @@ class Poison:
         self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
         pygame.display.flip()
 
+    def new_poison(self):
+        self.poison_x = random.randint(0, 20) * size
+        self.poison_y = random.randint(0, 20) * size
+
+class Poison_2:
+    def __init__(self, main_screen):
+        apple = pygame.image.load("img/poison_apple.webp").convert_alpha()
+        default_apple_size = (40, 40)
+        self.poison = pygame.transform.scale(apple, default_apple_size)
+        self.main_screen = main_screen
+        self.poison_x = random.randint(0, 20) * size
+        self.poison_y = random.randint(0, 20) * size
+
+    def draw_poison(self):
+        self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
+        pygame.display.flip()
+
+    def new_poison(self):
+        self.poison_x = random.randint(0, 20) * size
+        self.poison_y = random.randint(0, 20) * size
 
 class Rat:
     def __init__(self, main_screen, length):
@@ -131,6 +151,9 @@ class Game:
         self.poison = Poison(self.surface)
         self.poison.draw_poison()
 
+        self.poison_2 = Poison_2(self.surface)
+        self.poison_2.draw_poison()
+
     def collide(self, x1, y1, x2, y2):
         # if the coordinates of rat are within the coordinates of cheese, collision is true 
         if x1 >= x2 and x1 <= x2 + size:
@@ -151,6 +174,7 @@ class Game:
         self.food.draw_cheese() 
 
         self.poison.draw_poison()
+        self.poison_2.draw_poison()
 
         self.keep_score()
         pygame.display.flip()
@@ -161,7 +185,11 @@ class Game:
             self.rat.grow()
 
         if self.poison_collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison.poison_x, self.poison.poison_y):
-           
+            self.poison.new_poison()
+            self.rat.shrink()
+
+        if self.poison_collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison_2.poison_x, self.poison_2.poison_y):
+            self.poison_2.new_poison()
             self.rat.shrink()
 
 
