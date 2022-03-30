@@ -14,8 +14,8 @@ class Food:
         default_cheese_size = (40, 40)
         self.image = pygame.transform.scale(cheese, default_cheese_size)
         self.main_screen = main_screen
-        self.cheese_x = size * 3
-        self.cheese_y = size * 3
+        self.cheese_x = random.randint(0, 20) * size
+        self.cheese_y = random.randint(0, 20) * size
 
     def draw_cheese(self):
         self.main_screen.blit(self.image, (self.cheese_x, self.cheese_y))
@@ -31,8 +31,8 @@ class Poison:
         default_apple_size = (40, 40)
         self.poison = pygame.transform.scale(apple, default_apple_size)
         self.main_screen = main_screen
-        self.poison_x = size * 10
-        self.poison_y = size * 10
+        self.poison_x = random.randint(0, 20) * size
+        self.poison_y = random.randint(0, 20) * size
 
     def draw_poison(self):
         self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
@@ -58,7 +58,7 @@ class Rat:
 
 # method to render rat responsive to movement
     def draw_rat(self):
-        self.main_screen.fill((0, 0, 205)) 
+        self.main_screen.fill((0, 0, 0)) 
         for i in range(self.length):
             self.main_screen.blit(self.rat, (self.rat_x[i], self.rat_y[i]))
         pygame.display.flip()
@@ -69,6 +69,11 @@ class Rat:
         self.rat_x.append(-1)
         self.rat_y.append(-1)
 
+    def shrink(self):
+        self.length -= 1
+        self.rat_x.pop()
+        self.rat_y.pop()
+
 # functions to move i a direction based on keystrokes
     def move_left(self):
         self.direction = 'left'
@@ -78,13 +83,16 @@ class Rat:
 
     def move_up(self):
         self.direction = 'up'
-
+        # new_rat = pygame.transform.rotate(self.rat, 90)
+        # self.main_screen.blit(new_rat, (self.rat_x, self.rat_y))
+        # pygame.display.flip()
     def move_down(self):
         self.direction = 'down'
 
 
     def walk(self):
     # Move accumulated rats to position in front of it (current blocks old position is previous blocks new position)
+        rotated_img = pygame.transform.rotate(self.rat, 90)
         time.sleep(0.2)
         for i in range(self.length-1, 0, -1):
             self.rat_x[i] = self.rat_x[i-1]
@@ -92,6 +100,9 @@ class Rat:
     # move rat continuously based on direction one full block size on each movement
         if self.direction == 'up':
             self.rat_y[0] -= size
+            # self.rat_y[0] = rotated_img
+            # self.main_screen.blit(rotated_img, (self.rat_x[i], self.rat_y[i]))
+            # pygame.display.flip()
         if self.direction == 'down':
             self.rat_y[0] += size
         if self.direction == 'left':
@@ -107,7 +118,7 @@ class Game:
 
     # initializes game window (pixel dimensions) and color (.fill)
         self.surface = pygame.display.set_mode((1000, 1000))
-        self.surface.fill((0, 0, 205))
+        self.surface.fill((0, 0, 0))
 
     # creating the rat inside of the game by using the Rat class (expects main_screen value)
         self.rat = Rat(self.surface, 1)
@@ -122,11 +133,16 @@ class Game:
 
     def collide(self, x1, y1, x2, y2):
         # if the coordinates of rat are within the coordinates of cheese, collision is true 
-        if x1 >= x2 and x1 < x2 + size:
-            if y1 >= y2 and y1 < y2 + size:
+        if x1 >= x2 and x1 <= x2 + size:
+            if y1 >= y2 and y1 <= y2 + size:
                 return True
         return False
 
+    def poison_collide(self, x1, y1, x2, y2):
+        if x1 >= x2 and x1 <= x2 + size:
+            if y1 >= y2 and y1 <= y2 + size:
+                return True
+        return False        
 
     def play(self):
     # rendering rat walk
@@ -144,10 +160,14 @@ class Game:
         # when rat collides, increase length and add a block to the array
             self.rat.grow()
 
+        if self.poison_collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison.poison_x, self.poison.poison_y):
+           
+            self.rat.shrink()
+
 
     def keep_score(self):
         font = pygame.font.SysFont('arial', 40)
-        score = font.render(f"{self.rat.length -1}", True, (0, 0, 0))
+        score = font.render(f"{self.rat.length -1}", True, (255, 255, 255))
         self.surface.blit(score, (950, 15))
 
 # setting game up to run and giving keystrokes functionality        
