@@ -75,7 +75,7 @@ class Game:
 
         if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
             self.poison_2.new_poison()
-            self.rat.shrink()
+            self.rat.die()
 
 # keeping score based on the length of the array containing the rats
     def keep_score(self):

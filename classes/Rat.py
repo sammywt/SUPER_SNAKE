@@ -52,9 +52,15 @@ class Rat:
         self.rat_y.append(-1)
 
     def shrink(self):
-        self.length -= 1
-        self.rat_x.pop()
-        self.rat_y.pop()
+        if self.length == 1:
+            self.die()
+        else:
+            self.length -= 1
+            self.rat_x.pop()
+            self.rat_y.pop()
+
+    def die(self):
+        self.length = 0
 
 # functions to move i a direction based on keystrokes
     def move_left(self):
@@ -65,9 +71,7 @@ class Rat:
 
     def move_up(self):
         self.direction = 'up'
-        # new_rat = pygame.transform.rotate(self.rat, 90)
-        # self.main_screen.blit(new_rat, (self.rat_x, self.rat_y))
-        # pygame.display.flip()
+       
     def move_down(self):
         self.direction = 'down'
 
