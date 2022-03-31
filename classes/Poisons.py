@@ -25,7 +25,7 @@ class Poison:
 class Poison_2:
     def __init__(self, main_screen):
         apple = pygame.image.load("img/poison_apple.webp").convert_alpha()
-        default_apple_size = (40, 40)
+        default_apple_size = (30, 30)
         self.poison = pygame.transform.scale(apple, default_apple_size)
         self.main_screen = main_screen
         self.poison_x = random.randint(0, 20) * size

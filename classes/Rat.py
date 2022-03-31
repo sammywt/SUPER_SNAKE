@@ -12,13 +12,9 @@ class Rat:
         self.main_screen = main_screen
         self.length = length
 
-    # def __str__(self):
-    #     return
-
     # importing image and resizing it
-        self.image = pygame.image.load("img/pixel_mouse.gif").convert_alpha()
-        self.default_image_size = (size*2, size*2)
-        
+        self.image = pygame.image.load("img/pxl_rat.png").convert_alpha()
+        self.default_image_size = (40, 20)     
 
     # setting the default position for the rat and rendering it on the surface, using array to hold subsequent blocks accumulated
         self.rat_x = [size] * length
