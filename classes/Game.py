@@ -45,6 +45,7 @@ class Game:
         return False
 
 
+
     def play(self):
     # rendering rat walk
         self.rat.walk()
@@ -65,17 +66,52 @@ class Game:
         # when rat collides, increase length and add a block to the array
             self.rat.grow()
 
-        if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison.poison_x, self.poison.poison_y):
-            self.poison.new_poison()
-            self.rat.shrink()
+    # POISON 1
+    # handling contact for all rats before the initial rat
+        if self.rat.length > 1:
+            for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+                if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.poison.poison_x, self.poison.poison_y):
+                    self.poison.new_poison()
+                    self.rat.shrink()
+    # handling contact for the first rat
+        elif self.rat.length == 1:
+             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison.poison_x, self.poison.poison_y):
+                    self.poison.new_poison()
+                    self.rat.shrink()
 
-        if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison_2.poison_x, self.poison_2.poison_y):
-            self.poison_2.new_poison()
-            self.rat.shrink()
+    # POISON 2
+        if self.rat.length > 1:
+            for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+                if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.poison_2.poison_x, self.poison_2.poison_y):
+                    self.poison_2.new_poison()
+                    self.rat.shrink()
+    # handling contact for the first rat
+        elif self.rat.length == 1:
+             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison_2.poison_x, self.poison_2.poison_y):
+                    self.poison_2.new_poison()
+                    self.rat.shrink()
 
-        if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
-            self.poison_2.new_poison()
-            self.rat.die()
+    # BOMB
+        if self.rat.length > 1:
+            for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+                if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.bomb.bomb_x, self.bomb.bomb_y):
+                    self.rat.die()
+    # handling contact for the first rat
+        elif self.rat.length == 1:
+             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
+                    self.rat.die()
+
+        # for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+        #     if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.poison_2.poison_x, self.poison_2.poison_y):
+        #         self.poison_2.new_poison()
+        #         self.rat.shrink()
+
+        # for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+        #     if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.bomb.bomb_x, self.bomb.bomb_y):
+        #         self.rat.die()
+
+        # if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
+        #     self.rat.die()
 
 # keeping score based on the length of the array containing the rats
     def keep_score(self):

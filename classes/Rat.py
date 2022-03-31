@@ -12,6 +12,9 @@ class Rat:
         self.main_screen = main_screen
         self.length = length
 
+    # def __str__(self):
+    #     return
+
     # importing image and resizing it
         self.image = pygame.image.load("img/pixel_mouse.gif").convert_alpha()
         self.default_image_size = (size*2, size*2)
