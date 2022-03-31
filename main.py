@@ -3,7 +3,7 @@ import time
 import random
 # importing keystrokes
 from pygame.locals import *
-from objects.Game import Game
+from classes.Game import Game
 
         
 
