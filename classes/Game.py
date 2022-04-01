@@ -134,6 +134,8 @@ class Game:
         self.surface.blit(score, (950, 15))
 
     def show_game_over(self):
+        crash = pygame.mixer.Sound("sounds/crash-sound-effect.mp3")
+        pygame.mixer.Sound.play(crash)
         self.surface.fill((100, 100, 100))
         font = pygame.font.SysFont('arial', 20)
         line1 = font.render(f"GAME OVER", True, (255, 255, 255))
