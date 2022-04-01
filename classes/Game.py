@@ -89,6 +89,8 @@ class Game:
         if self.rat.length > 1:
             for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
                 if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.poison.poison_x, self.poison.poison_y):
+                    crunch = pygame.mixer.Sound("sounds/crunch-snow-sound-effect.mp3")
+                    pygame.mixer.Sound.play(crunch)
                     self.poison.new_poison()
                     self.rat.shrink()
     # handling contact for the first rat
@@ -100,6 +102,8 @@ class Game:
         if self.rat.length > 1:
             for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
                 if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.poison_2.poison_x, self.poison_2.poison_y):
+                    crunch = pygame.mixer.Sound("sounds/crunch-snow-sound-effect.mp3")
+                    pygame.mixer.Sound.play(crunch)
                     self.poison_2.new_poison()
                     self.rat.shrink()
     # handling contact for the first rat
