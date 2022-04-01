@@ -50,16 +50,6 @@ class Game:
         return False
 
 
-
-    def show_game_over(self):
-        self.surface.fill((100, 100, 100))
-        font = pygame.font.SysFont('arial', 50)
-        line1 = font.render(f"GAME OVER", True, (255, 255, 255))
-        self.surface.blit(line1, (250, 250))
-        line2 = font.render("press enter to play again", True, (255, 255, 255))
-        self.surface.blit(line2, (250, 350))
-        pygame.display.flip()
-
     def play(self):
     # rendering rat walk
         self.rat.walk()
@@ -83,8 +73,8 @@ class Game:
             self.rat.grow()
 
     # snake colliding with self
-        for i in range(1, self.rat.length):
-            if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.rat.rat_x[i]+1, self.rat.rat_y[i]+1):
+        for i in range(3, self.rat.length):
+            if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.rat.rat_x[i], self.rat.rat_y[i]):
                 # print("game_over")
                 # exit(0)
                 raise "Game Over"
@@ -140,14 +130,26 @@ class Game:
         score = font.render(f"{self.rat.length -1}", True, (255, 255, 255))
         self.surface.blit(score, (950, 15))
 
-    # def show_game_over(self):
-    #     self.surface.fill((100, 100, 100))
-    #     font = pygame.font.SysFont('arial', 50)
-    #     line1 = font.render(f"GAME OVER", True, (255, 255, 255))
-    #     self.surface.blit(line1, (250, 250))
-    #     line2 = font.render("press enter to play again", True, (255, 255, 255))
-    #     self.surface.blit(line2, (250, 350))
-    #     pygame.display.flip()
+    def show_game_over(self):
+        self.surface.fill((100, 100, 100))
+        font = pygame.font.SysFont('arial', 20)
+        line1 = font.render(f"GAME OVER", True, (255, 255, 255))
+        self.surface.blit(line1, (100, 150))
+        line2 = font.render(f"SCORE: {self.rat.length}", True, (255, 255, 255))
+        self.surface.blit(line2, (100, 250))
+        line3 = font.render("press enter to play again", True, (255, 255, 255))
+        self.surface.blit(line3, (100, 350))
+        line4 = font.render("press esc to exit", True, (255, 255, 255))
+        self.surface.blit(line4, (100, 450))
+        pygame.display.flip()
+
+    def reset_game(self):
+        self.rat = Rat(self.surface, 1)
+        self.food = Food(self.surface)
+        self.cat = Cat(self.surface)
+        self.poison = Poison(self.surface)
+        self.poison_2 = Poison_2(self.surface)
+        self.bomb = Bomb(self.surface)
 
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
@@ -156,24 +158,26 @@ class Game:
         while running: 
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
+
                     if event.key == K_ESCAPE:
                         running = False
-                    if event.key == K_UP:
-                        self.rat.move_up()
-                        # head_y -= 20
-                        # draw_head()
-                    if event.key == K_DOWN:
-                        self.rat.move_down()
-                        # head_y += 20
-                        # draw_head()
-                    if event.key == K_LEFT:
-                        self.rat.move_left()
-                        # head_x -= 20
-                        # draw_head()
-                    if event.key == K_RIGHT:
-                        self.rat.move_right()
-                        # head_x += 20
-                        # draw_head()
+
+                    if event.key == K_RETURN:
+                        pause = False
+
+                    if not pause:
+                        if event.key == K_UP:
+                            self.rat.move_up()
+
+                        if event.key == K_DOWN:
+                            self.rat.move_down()
+
+                        if event.key == K_LEFT:
+                            self.rat.move_left()
+                            
+                        if event.key == K_RIGHT:
+                            self.rat.move_right()
+                       
                 elif event.type == QUIT:
                     running = False
 
@@ -184,6 +188,7 @@ class Game:
             except Exception as e:
                 self.show_game_over()
                 pause = True
+                self.reset_game()
 
 
             time.sleep(0.15)

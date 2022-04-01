@@ -58,8 +58,6 @@ class Rat:
             self.rat_x.pop()
             self.rat_y.pop()
 
-    def die(self):
-        self.length = 0
 
 # functions to move i a direction based on keystrokes
     def move_left(self):
