@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+
 # importing keystrokes
 from pygame.locals import *
 from classes.Rat import Rat
@@ -50,6 +51,15 @@ class Game:
 
 
 
+    def show_game_over(self):
+        self.surface.fill((100, 100, 100))
+        font = pygame.font.SysFont('arial', 50)
+        line1 = font.render(f"GAME OVER", True, (255, 255, 255))
+        self.surface.blit(line1, (250, 250))
+        line2 = font.render("press enter to play again", True, (255, 255, 255))
+        self.surface.blit(line2, (250, 350))
+        pygame.display.flip()
+
     def play(self):
     # rendering rat walk
         self.rat.walk()
@@ -75,8 +85,9 @@ class Game:
     # snake colliding with self
         for i in range(1, self.rat.length):
             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.rat.rat_x[i]+1, self.rat.rat_y[i]+1):
-                print("game_over")
-                exit(0)
+                # print("game_over")
+                # exit(0)
+                raise "Game Over"
 
 
 
@@ -90,8 +101,7 @@ class Game:
     # handling contact for the first rat
         elif self.rat.length == 1:
              if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison.poison_x, self.poison.poison_y):
-                    self.poison.new_poison()
-                    self.rat.shrink()
+                    raise "Game Over"
 
     # POISON 2
         if self.rat.length > 1:
@@ -102,28 +112,27 @@ class Game:
     # handling contact for the first rat
         elif self.rat.length == 1:
              if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.poison_2.poison_x, self.poison_2.poison_y):
-                    self.poison_2.new_poison()
-                    self.rat.shrink()
+                    raise "Game Over"
 
     # BOMB
         if self.rat.length > 1:
             for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
                 if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.bomb.bomb_x, self.bomb.bomb_y):
-                    self.rat.die()
+                    raise "Game Over"
     # handling contact for the first rat
         elif self.rat.length == 1:
              if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
-                    self.rat.die()
+                    raise "Game Over"
 
     # CAT
         if self.rat.length > 1:
             for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
                 if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.cat.cat_x, self.cat.cat_y):
-                    self.rat.die()
+                    raise "Game Over"
     # handling contact for the first rat
         elif self.rat.length == 1:
-             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.cat.cat_x, self.cat.cat_y):
-                    self.rat.die()
+            if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.cat.cat_x, self.cat.cat_y):
+                raise "Game Over"
 
 # keeping score based on the length of the array containing the rats
     def keep_score(self):
@@ -131,9 +140,19 @@ class Game:
         score = font.render(f"{self.rat.length -1}", True, (255, 255, 255))
         self.surface.blit(score, (950, 15))
 
+    # def show_game_over(self):
+    #     self.surface.fill((100, 100, 100))
+    #     font = pygame.font.SysFont('arial', 50)
+    #     line1 = font.render(f"GAME OVER", True, (255, 255, 255))
+    #     self.surface.blit(line1, (250, 250))
+    #     line2 = font.render("press enter to play again", True, (255, 255, 255))
+    #     self.surface.blit(line2, (250, 350))
+    #     pygame.display.flip()
+
 # setting game up to run and giving keystrokes functionality        
     def run_game(self):
         running = True
+        pause = False
         while running: 
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
@@ -158,4 +177,13 @@ class Game:
                 elif event.type == QUIT:
                     running = False
 
-            self.play()
+
+            try:
+                if not pause:
+                    self.play()
+            except Exception as e:
+                self.show_game_over()
+                pause = True
+
+
+            time.sleep(0.15)
