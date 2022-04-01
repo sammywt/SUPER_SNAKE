@@ -29,7 +29,7 @@ class Rat:
     def draw_rat(self):
         self.rat = pygame.transform.scale(self.image, self.default_image_size)
         self.rat = pygame.transform.rotate(self.rat, self.angle)
-        self.main_screen.fill((0, 0, 0)) 
+        # self.main_screen.fill((0, 0, 0)) 
         
         if self.direction == 'up':
             self.rat = pygame.transform.flip(self.rat, False, False)

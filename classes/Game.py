@@ -21,7 +21,7 @@ class Game:
         pygame.mixer.init()
     # initializes game window (pixel dimensions) and color (.fill)
         self.surface = pygame.display.set_mode((1000, 1000))
-        self.surface.fill((0, 0, 0))
+        # self.surface.fill("img/crumpled_paper.jpeg")
 
     # creating the rat inside of the game by using the Rat class (expects main_screen value)
         self.rat = Rat(self.surface, 1)
@@ -51,7 +51,12 @@ class Game:
         return False
 
 
+    def render_background(self):
+        image = pygame.image.load("img/red_brick.png")
+        self.surface.blit(image, (0, 0))
+
     def play(self):
+        self.render_background()
     # rendering rat walk
         self.rat.walk()
     # to ensure that when screen is rendered, food isn't wiped off
@@ -81,8 +86,6 @@ class Game:
                 # print("game_over")
                 # exit(0)
                 raise "Game Over"
-
-
 
     # POISON 1
     # handling contact for all rats before the initial rat
@@ -140,7 +143,8 @@ class Game:
     def show_game_over(self):
         crash = pygame.mixer.Sound("sounds/crash-sound-effect.mp3")
         pygame.mixer.Sound.play(crash)
-        self.surface.fill((100, 100, 100))
+        # self.surface.fill((100, 100, 100))
+        self.render_background()
         font = pygame.font.SysFont('arial', 20)
         line1 = font.render(f"GAME OVER", True, (255, 255, 255))
         self.surface.blit(line1, (100, 150))
