@@ -107,6 +107,16 @@ class Game:
              if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.bomb.bomb_x, self.bomb.bomb_y):
                     self.rat.die()
 
+    # CAT
+        if self.rat.length > 1:
+            for i in range(len(self.rat.rat_x)-1 and len(self.rat.rat_y)-1):
+                if self.collide(self.rat.rat_x[i], self.rat.rat_y[i], self.cat.cat_x, self.cat.cat_y):
+                    self.rat.die()
+    # handling contact for the first rat
+        elif self.rat.length == 1:
+             if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.cat.cat_x, self.cat.cat_y):
+                    self.rat.die()
+
 # keeping score based on the length of the array containing the rats
     def keep_score(self):
         font = pygame.font.SysFont('arial', 40)
