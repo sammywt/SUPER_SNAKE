@@ -15,9 +15,10 @@ size = 45
         
 class Game:
     def __init__(self):
-     # initializes pygame module
+    # initializes pygame module
         pygame.init()
-
+    # initializes sounds
+        pygame.mixer.init()
     # initializes game window (pixel dimensions) and color (.fill)
         self.surface = pygame.display.set_mode((1000, 1000))
         self.surface.fill((0, 0, 0))
@@ -68,6 +69,8 @@ class Game:
 
     # passing rat coordinates and cheese coordinates as x/y 1 and 2 values from collide method
         if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.food.cheese_x, self.food.cheese_y):
+            ding = pygame.mixer.Sound("sounds/bicycle-bell-ding-sound-effect.mp3")
+            pygame.mixer.Sound.play(ding)
             self.food.new_food()
         # when rat collides, increase length and add a block to the array
             self.rat.grow()
