@@ -6,9 +6,7 @@ from pygame.locals import *
 
 size = 45
 vec = pygame.Vector2()
-direction = 1
-speed_x = 2
-speed_y = 3
+
 
 class Cat:
 
@@ -32,8 +30,9 @@ class Cat:
 
 
     def move(self):
-        self.cat_x += size
-        self.cat_y += size
+        self.cat_x += random.randint(-50, 50)
+        self.cat_y += random.randint(-50, 50)
+       
         self.draw_cat()
 
     # def walk(self):
