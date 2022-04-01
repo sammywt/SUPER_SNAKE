@@ -16,7 +16,7 @@ class Bomb:
 
     def draw_bomb(self):
         self.main_screen.blit(self.bomb, (self.bomb_x, self.bomb_y))
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def new_bomb(self):
         self.bomb_x = random.randint(0, 20) * size

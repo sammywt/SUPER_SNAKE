@@ -42,7 +42,7 @@ class Rat:
 
         for i in range(self.length):
             self.main_screen.blit(self.rat, (self.rat_x[i], self.rat_y[i]))
-        pygame.display.flip()
+        # pygame.display.flip()
 
 # method to increase number of rats when cheese is eaten (adding to end of array)
     def grow(self):

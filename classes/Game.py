@@ -23,23 +23,23 @@ class Game:
 
     # creating the rat inside of the game by using the Rat class (expects main_screen value)
         self.rat = Rat(self.surface, 1)
-        self.rat.draw_rat()
+        # self.rat.draw_rat()
 
     # initializing the cheese inside of the game
         self.food = Food(self.surface)
-        self.food.draw_cheese()
+        # self.food.draw_cheese()
 
         self.cat = Cat(self.surface)
-        self.cat.draw_cat()
+        # self.cat.draw_cat()
         
         self.poison = Poison(self.surface)
-        self.poison.draw_poison()
+        # self.poison.draw_poison()
 
         self.poison_2 = Poison_2(self.surface)
-        self.poison_2.draw_poison()
+        # self.poison_2.draw_poison()
 
         self.bomb = Bomb(self.surface)
-        self.bomb.draw_bomb()
+        # self.bomb.draw_bomb()
 
     def collide(self, x1, y1, x2, y2):
         # if the coordinates of rat are within the coordinates of cheese, collision is true 
@@ -71,6 +71,14 @@ class Game:
             self.food.new_food()
         # when rat collides, increase length and add a block to the array
             self.rat.grow()
+
+    # snake colliding with self
+        for i in range(1, self.rat.length):
+            if self.collide(self.rat.rat_x[0], self.rat.rat_y[0], self.rat.rat_x[i]+1, self.rat.rat_y[i]+1):
+                print("game_over")
+                exit(0)
+
+
 
     # POISON 1
     # handling contact for all rats before the initial rat

@@ -5,7 +5,6 @@ import random
 from pygame.locals import *
 
 size = 45
-vec = pygame.Vector2()
 
 
 class Cat:
@@ -26,7 +25,7 @@ class Cat:
 
     def draw_cat(self):
         self.main_screen.blit(self.cat, (self.cat_x, self.cat_y))
-        pygame.display.flip()
+        # pygame.display.flip()
 
 
     def move(self):

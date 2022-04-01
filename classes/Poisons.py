@@ -16,7 +16,7 @@ class Poison:
 
     def draw_poison(self):
         self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def new_poison(self):
         self.poison_x = random.randint(0, 20) * size
@@ -33,7 +33,7 @@ class Poison_2:
 
     def draw_poison(self):
         self.main_screen.blit(self.poison, (self.poison_x, self.poison_y))
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def new_poison(self):
         self.poison_x = random.randint(0, 20) * size
