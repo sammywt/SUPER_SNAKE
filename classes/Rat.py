@@ -79,7 +79,7 @@ class Rat:
     # Move accumulated rats to position in front of it (current blocks old position is previous blocks new position)
         # rotated_img = pygame.transform.rotate(self.rat, 90)
         time.sleep(0.2)
-        for i in range(self.length-1, 0, -1):
+        for i in range(self.length -1, 0, -1):
             self.rat_x[i] = self.rat_x[i-1]
             self.rat_y[i] = self.rat_y[i-1]
     # move rat continuously based on direction one full block size on each movement

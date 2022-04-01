@@ -7,8 +7,8 @@ size = 45
 
 class Poison:
     def __init__(self, main_screen):
-        apple = pygame.image.load("img/poison_apple.webp").convert_alpha()
-        default_apple_size = (40, 40)
+        apple = pygame.image.load("img/pxl_poison_apple.png").convert_alpha()
+        default_apple_size = (size, size)
         self.poison = pygame.transform.scale(apple, default_apple_size)
         self.main_screen = main_screen
         self.poison_x = random.randint(0, 20) * size
@@ -24,8 +24,8 @@ class Poison:
 
 class Poison_2:
     def __init__(self, main_screen):
-        apple = pygame.image.load("img/poison_apple.webp").convert_alpha()
-        default_apple_size = (30, 30)
+        apple = pygame.image.load("img/pxl_poison_apple.png").convert_alpha()
+        default_apple_size = (size, size)
         self.poison = pygame.transform.scale(apple, default_apple_size)
         self.main_screen = main_screen
         self.poison_x = random.randint(0, 20) * size

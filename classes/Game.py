@@ -6,6 +6,7 @@ from pygame.locals import *
 from classes.Rat import Rat
 from classes.Food import Food
 from classes.Bomb import Bomb
+from classes.Cat import Cat
 from classes.Poisons import Poison, Poison_2
 
 size = 45
@@ -28,6 +29,9 @@ class Game:
         self.food = Food(self.surface)
         self.food.draw_cheese()
 
+        self.cat = Cat(self.surface)
+        self.cat.draw_cat()
+        
         self.poison = Poison(self.surface)
         self.poison.draw_poison()
 
@@ -51,6 +55,8 @@ class Game:
         self.rat.walk()
     # to ensure that when screen is rendered, food isn't wiped off
         self.food.draw_cheese() 
+
+        self.cat.move()
 
         self.poison.draw_poison()
         self.poison_2.draw_poison()

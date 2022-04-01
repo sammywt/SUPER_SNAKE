@@ -7,7 +7,7 @@ size = 45
 
 class Bomb:
     def __init__(self, main_screen):
-        bomb = pygame.image.load("img/pixl_bomb.png").convert_alpha()
+        bomb = pygame.image.load("img/pxl_bomb.png").convert_alpha()
         default_bomb_size = (size, size)
         self.bomb = pygame.transform.scale(bomb, default_bomb_size)
         self.main_screen = main_screen

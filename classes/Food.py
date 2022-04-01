@@ -9,8 +9,8 @@ size = 45
 
 class Food:
     def __init__(self, main_screen):
-        cheese = pygame.image.load("img/chez.png").convert_alpha()
-        default_cheese_size = (40, 40)
+        cheese = pygame.image.load("img/pxl_cheese.png").convert_alpha()
+        default_cheese_size = (size, size)
         self.image = pygame.transform.scale(cheese, default_cheese_size)
         self.main_screen = main_screen
         self.cheese_x = random.randint(0, 20) * size
