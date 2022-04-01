@@ -32,43 +32,18 @@ class Cat:
     def move(self):
         self.cat_x += random.randint(-50, 50)
         self.cat_y += random.randint(-50, 50)
-       
+        if self.cat_x >= 950:
+            self.cat_x -= 50
+        elif self.cat_x <= 50:
+            self.cat_x += 50
+
+        if self.cat_y >= 950:
+            self.cat_y -= 50
+        elif self.cat_y <= 50:
+            self.cat_y += 50
+
+
         self.draw_cat()
 
-    # def walk(self):
-
-
-        
     
-    #     run = True
-    #     while run:
-
-    #         # starting position already set
-    #         # generate random int, either 1 or 2
-    #         # if 1, move a size down
-    #         # if 2, move a size up
-    #         # if a 3, move a size left
-    #         # if a 4, move a size right
-    #         # re render image in new position
-    #         # if cat_x or cat_y exceed boundary, set values to new position on screen
-    #         # if game over, exit loop
-    #         # call loop again
-           
-    #         direction = random.randint(0, 4)
-    #         if direction == 1:
-    #             cat_y += size
-    #         elif direction == 2: 
-    #             cat_y -= size
-    #         elif direction == 3:
-    #             cat_x -= size
-    #         elif direction == 4:
-    #             cat_x += size
-            
-
-    #         pygame.display.flip()
-    #         self.walk()
-        
-
-            
-            
             
